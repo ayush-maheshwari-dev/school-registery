@@ -1,0 +1,23 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         version="3.1">
+
+    <servlet>
+        <servlet-name>spring</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet <!-- register Spring's servlet -->
+        </servlet-class>
+
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/spring-servlet.xml</param-value> <!-- tell it where Spring config is -->
+        </init-param>
+
+        <load-on-startup>1</load-on-startup> <!-- start this servlet when Tomcat starts -->
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>spring</servlet-name>
+        <url-pattern>/</url-pattern> <!-- ALL requests go through Spring -->
+    </servlet-mapping>
+
+</web-app>
