@@ -1,0 +1,261 @@
+/* ---------- design tokens ---------- */
+:root{
+  --paper:#FAFAF7;
+  --surface:#FFFFFF;
+  --ink:#16181D;
+  --muted:#6A7178;
+  --line:#E7E4DC;            /* warm hairline */
+  --accent:#0F766E;          /* teal-700 */
+  --accent-soft:#E6F2F0;
+  --danger:#B4232B;
+  --danger-soft:#FBEAEA;
+  --radius:10px;             /* inputs, cards, buttons */
+  --radius-lg:12px;          /* the larger home entry cards */
+  --maxw:1040px;             /* shared page container width */
+  --gutter:28px;             /* shared horizontal padding */
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+
+
+/* ---------- base / reset ---------- */
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  line-height:1.5;
+  font-size:15px;
+}
+a{color:inherit;text-decoration:none}
+
+
+/* ---------- top bar (shared) ---------- */
+.topbar{border-bottom:1px solid var(--line);background:var(--surface)}
+.topbar__inner{
+  max-width:var(--maxw);margin:0 auto;padding:18px var(--gutter);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;flex-wrap:wrap;
+}
+.brand{font-size:20px;font-weight:650;letter-spacing:-.01em}
+.brand .dot{color:var(--accent)}
+.brand__sub{
+  font-size:11px;text-transform:uppercase;letter-spacing:.14em;
+  color:var(--muted);font-weight:600;
+}
+.nav{display:flex;gap:22px;font-size:14px;font-weight:600;color:var(--muted)}
+.nav a:hover{color:var(--ink)}
+
+
+/* ---------- buttons (shared) ---------- */
+.btn{
+  display:inline-block;appearance:none;cursor:pointer;font:inherit;font-weight:600;
+  padding:9px 16px;border-radius:var(--radius);border:1px solid transparent;
+}
+.btn--primary{background:var(--accent);color:#fff}
+.btn--primary:hover{filter:brightness(1.06)}
+.btn--ghost{background:var(--surface);border-color:var(--line);color:var(--ink)}
+.btn--ghost:hover{border-color:var(--muted)}
+.btn--sm{padding:6px 11px;font-size:13px}
+.btn--link{background:none;border:0;color:var(--accent);padding:6px 8px;font-size:13px}
+.btn--link.danger{color:var(--danger)}
+.btn--link:hover{text-decoration:underline}
+
+
+/* ---------- shared eyebrow label (small, used by admin panels) ---------- */
+.eyebrow{
+  font-size:11px;text-transform:uppercase;letter-spacing:.14em;
+  color:var(--muted);font-weight:700;margin:0 0 2px;
+}
+
+
+/* =========================================================================
+   HOME PAGE  (home.html)
+   ========================================================================= */
+
+/* hero — the faint ruled-ledger background is the signature element */
+.hero{
+  position:relative;overflow:hidden;border-bottom:1px solid var(--line);
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 47px,
+      rgba(15,118,110,.05) 47px,
+      rgba(15,118,110,.05) 48px
+    ),
+    var(--surface);
+}
+.hero__inner{max-width:var(--maxw);margin:0 auto;padding:84px var(--gutter) 76px}
+
+/* hero kicker — overrides the small base .eyebrow when inside the hero */
+.hero .eyebrow{
+  font-size:12px;letter-spacing:.16em;color:var(--accent);margin:0 0 20px;
+}
+.hero .eyebrow::before{
+  content:"";display:inline-block;width:26px;height:2px;background:var(--accent);
+  vertical-align:middle;margin-right:10px;margin-bottom:3px;
+}
+.hero h1{
+  font-size:clamp(34px,6vw,60px);line-height:1.04;letter-spacing:-.025em;
+  font-weight:680;margin:0;max-width:14ch;
+}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{margin:22px 0 0;max-width:48ch;font-size:17px;color:var(--muted);line-height:1.6}
+.hero__cta{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap}
+/* hero CTAs are larger than the standard button */
+.hero__cta .btn{padding:12px 22px}
+
+/* entry cards — one per API resource */
+.entry{
+  max-width:var(--maxw);margin:0 auto;padding:56px var(--gutter);
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;
+}
+.entry-card{
+  position:relative;display:block;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);
+  padding:28px 26px;transition:border-color .15s, transform .15s;
+}
+.entry-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.entry-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.entry-card .path{font-family:var(--mono);font-size:13px;color:var(--muted);margin:0 0 14px}
+.entry-card h3{font-size:22px;margin:0 0 8px;letter-spacing:-.01em;font-weight:650}
+.entry-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}
+.entry-card .go{
+  display:inline-flex;align-items:center;gap:6px;margin-top:18px;
+  color:var(--accent);font-weight:600;font-size:14px;
+}
+.entry-card:hover .go .arrow{transform:translateX(3px)}
+.arrow{transition:transform .15s}
+
+/* capabilities row */
+.features{border-top:1px solid var(--line);background:var(--surface)}
+.features__inner{
+  max-width:var(--maxw);margin:0 auto;padding:56px var(--gutter);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:36px 32px;
+}
+.feat .k{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600}
+.feat h4{margin:10px 0 6px;font-size:16px;font-weight:650}
+.feat p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}
+
+/* footer */
+footer{border-top:1px solid var(--line)}
+.footer__inner{
+  max-width:var(--maxw);margin:0 auto;padding:24px var(--gutter);
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  color:var(--muted);font-size:13px;
+}
+
+
+/* =========================================================================
+   ADMIN CONSOLE  (index.html)
+   ========================================================================= */
+
+/* tab nav */
+.tabs{
+  max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);
+  display:flex;gap:4px;border-bottom:1px solid var(--line);
+}
+.tab{
+  appearance:none;border:0;background:none;cursor:pointer;font:inherit;
+  color:var(--muted);font-weight:600;padding:14px 16px 12px;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+}
+.tab:hover{color:var(--ink)}
+.tab.is-active{color:var(--ink);border-bottom-color:var(--accent)}
+
+/* layout */
+main{max-width:var(--maxw);margin:0 auto;padding:28px var(--gutter) 64px}
+.panel{margin-bottom:48px}
+.panel__head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:16px;margin-bottom:18px;flex-wrap:wrap;
+}
+.panel__title{font-size:22px;font-weight:650;margin:0;letter-spacing:-.01em}
+
+/* toolbar: search + add */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.search{position:relative}
+.search input{
+  width:240px;max-width:60vw;padding:9px 12px 9px 34px;
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--surface);font:inherit;color:var(--ink);
+}
+.search input:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.search svg{
+  position:absolute;left:11px;top:50%;transform:translateY(-50%);
+  width:15px;height:15px;color:var(--muted);
+}
+
+/* table / ledger */
+.card{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);overflow:hidden;
+}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:560px}
+thead th{
+  text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--muted);font-weight:700;padding:12px 16px;
+  border-bottom:1px solid var(--line);white-space:nowrap;
+}
+tbody td{padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#FBFBF9}
+.id{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.num{font-family:var(--mono);font-size:13px;text-align:right}
+th.num{text-align:right}
+.name{font-weight:600}
+.email{color:var(--muted);font-size:13px}
+.pill{
+  display:inline-block;padding:2px 9px;border-radius:999px;
+  background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:600;
+}
+.row-actions{text-align:right;white-space:nowrap}
+.empty{padding:40px 16px;text-align:center;color:var(--muted)}
+.empty strong{display:block;color:var(--ink);font-weight:600;margin-bottom:2px}
+
+/* form */
+.form-card{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:22px 22px 8px;margin-top:18px;
+}
+.form-card__title{font-size:15px;font-weight:650;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px 18px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field--full{grid-column:1 / -1}
+label{font-size:13px;font-weight:600}
+label .req{color:var(--danger)}
+.hint{font-size:12px;color:var(--muted);font-weight:400}
+input[type=text],input[type=email],input[type=number],select{
+  padding:9px 11px;border:1px solid var(--line);border-radius:8px;
+  background:var(--surface);font:inherit;color:var(--ink);width:100%;
+}
+input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.err{margin:0;min-height:0;font-size:12px;color:var(--danger)}
+.field.has-error input,.field.has-error select{
+  border-color:var(--danger);background:var(--danger-soft);
+}
+.form-actions{
+  display:flex;gap:10px;justify-content:flex-end;padding:18px 0 14px;margin-top:6px;
+}
+.banner{
+  display:flex;gap:10px;align-items:center;background:var(--danger-soft);
+  border:1px solid #F0C9C9;color:var(--danger);padding:11px 14px;
+  border-radius:var(--radius);font-size:14px;margin-bottom:18px;
+}
+
+
+/* ---------- responsive ---------- */
+@media (max-width:680px){
+  .entry{grid-template-columns:1fr}
+  .features__inner{grid-template-columns:1fr;gap:28px}
+  .hero__inner{padding:60px 24px 56px}
+  .grid{grid-template-columns:1fr}
+  .panel__head{align-items:stretch}
+}
+@media (prefers-reduced-motion:reduce){
+  .entry-card,.arrow{transition:none}
+}

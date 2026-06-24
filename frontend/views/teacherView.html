@@ -1,0 +1,116 @@
+ <!-- ng: wrap this whole <section> in ng-show / a route -->
+    <section class="panel" id="teachers">
+      <div class="panel__head">
+        <div>
+          <p class="eyebrow">GET /teachers</p>
+          <h2 class="panel__title">Teachers</h2>
+        </div>
+        <div class="toolbar">
+          <div class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Search by name…" aria-label="Search teachers" />
+          </div>
+          <button class="btn btn--primary">+ Add teacher</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:64px">ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Subject</th>
+                <th>Department</th>
+                <th class="num">Exp.</th>
+                <th class="num">Salary</th>
+                <th></th>
+              </tr>
+            </thead>
+            <!-- ng: ng-repeat="t in teachers" -->
+            <tbody>
+              <tr>
+                <td class="id">#1</td>
+                <td class="name">Meera Iyer</td>
+                <td class="email">meera@example.com</td>
+                <td>Mathematics</td>
+                <td><span class="pill">Science</span></td>
+                <td class="num">12</td>
+                <td class="num">₹84,000</td>
+                <td class="row-actions">
+                  <button class="btn--link">Edit</button>
+                  <button class="btn--link danger">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="id">#2</td>
+                <td class="name">Rohan Mehta</td>
+                <td class="email">rohan@example.com</td>
+                <td>History</td>
+                <td><span class="pill">Humanities</span></td>
+                <td class="num">7</td>
+                <td class="num">₹61,500</td>
+                <td class="row-actions">
+                  <button class="btn--link">Edit</button>
+                  <button class="btn--link danger">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ng: toggle add/edit form -->
+      <div class="form-card">
+        <h3 class="form-card__title">Add teacher</h3>
+        <div class="grid">
+          <div class="field">
+            <label>Name <span class="req">*</span></label>
+            <input type="text" placeholder="Full name" />
+            <span class="hint">3–16 characters</span>
+            <p class="err"><!-- ng: errors.name --></p>
+          </div>
+          <div class="field">
+            <label>Email <span class="req">*</span></label>
+            <input type="email" placeholder="name@example.com" />
+            <p class="err"><!-- ng: errors.email --></p>
+          </div>
+          <div class="field">
+            <label>Subject <span class="req">*</span></label>
+            <input type="text" placeholder="e.g. Mathematics" />
+            <p class="err"><!-- ng: errors.subject --></p>
+          </div>
+          <div class="field">
+            <label>Department <span class="req">*</span></label>
+            <select>
+              <option value="" disabled selected>Select department…</option>
+              <option>Science</option>
+              <option>Humanities</option>
+              <option>Commerce</option>
+              <option>Languages</option>
+            </select>
+            <p class="err"><!-- ng: errors.department --></p>
+          </div>
+          <div class="field">
+            <label>Experience (years) <span class="req">*</span></label>
+            <input type="number" min="0" max="50" placeholder="0" />
+            <span class="hint">0 – 50</span>
+            <p class="err"><!-- ng: errors.experience --></p>
+          </div>
+          <div class="field">
+            <label>Salary <span class="req">*</span></label>
+            <input type="number" min="30000" max="200000" step="500" placeholder="30000" />
+            <span class="hint">30,000 – 200,000</span>
+            <p class="err"><!-- ng: errors.salary --></p>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn--ghost">Cancel</button>
+          <button class="btn btn--primary">Save teacher</button>
+        </div>
+      </div>
+    </section>
+
+  </main>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>School Registry</title>
+</head>
+<body>
+
+  <!-- ============ TOP BAR ============ -->
+  <header class="topbar">
+    <div class="topbar__inner">
+      <span class="brand">School Registry<span class="dot">.</span></span>
+      <span class="brand__sub">Admin console</span>
+    </div>
+  </header>
+
+  <!-- ng: bind .is-active and ng-click to switch the active tab -->
+  <nav class="tabs">
+    <button class="tab is-active">Students</button>
+    <button class="tab">Teachers</button>
+  </nav>
+
+  <main>
+    <!-- ====================  STUDENTS  ====================== -->
+    <!-- ng: wrap this whole <section> in ng-show / a route -->
+    <section class="panel" id="students">
+      <div class="panel__head">
+        <div>
+          <p class="eyebrow">GET /students</p>
+          <h2 class="panel__title">Students</h2>
+        </div>
+        <div class="toolbar">
+          <div class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <!-- ng: ng-model + ng-change -> GET /students/search?name= -->
+            <input type="text" placeholder="Search by name…" aria-label="Search students" />
+          </div>
+          <!-- ng: ng-click -> open the add form -->
+          <button class="btn btn--primary">+ Add student</button>
+        </div>
+      </div>
+
+      <!-- ng: show this only when a request fails with {error:"..."} -->
+      <!--
+      <div class="banner">⚠ <span>Something went wrong.</span></div>
+      -->
+
+      <div class="card">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:64px">ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Course</th>
+                <th class="num">Year</th>
+                <th></th>
+              </tr>
+            </thead>
+            <!-- ng: replace these sample rows with ng-repeat="s in students" -->
+            <tbody>
+              <tr>
+                <td class="id">#1</td>
+                <td class="name">Aarav Sharma</td>
+                <td class="email">aarav@example.com</td>
+                <td><span class="pill">B.Tech CSE</span></td>
+                <td class="num">2024</td>
+                <td class="row-actions">
+                  <button class="btn--link">Edit</button>
+                  <button class="btn--link danger">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="id">#2</td>
+                <td class="name">Diya Patel</td>
+                <td class="email">diya@example.com</td>
+                <td><span class="pill">BBA</span></td>
+                <td class="num">2023</td>
+                <td class="row-actions">
+                  <button class="btn--link">Edit</button>
+                  <button class="btn--link danger">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="id">#3</td>
+                <td class="name">Kabir Singh</td>
+                <td class="email">kabir@example.com</td>
+                <td><span class="pill">B.Sc Physics</span></td>
+                <td class="num">2025</td>
+                <td class="row-actions">
+                  <button class="btn--link">Edit</button>
+                  <button class="btn--link danger">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- ng: show with ng-if="students.length === 0"
+        <div class="empty"><strong>No students yet</strong>Add one to get started.</div>
+        -->
+      </div>
+
+      <!-- ng: toggle this form (add/edit). Title + button label swap by mode. -->
+      <div class="form-card">
+        <h3 class="form-card__title">Add student</h3> <!-- ng: "Edit student" when editing -->
+        <div class="grid">
+          <div class="field">
+            <label>Name <span class="req">*</span></label>
+            <!-- ng: ng-model="form.name" -->
+            <input type="text" placeholder="Full name" />
+            <span class="hint">3–16 characters</span>
+            <p class="err"><!-- ng: errors.name --></p>
+          </div>
+          <div class="field">
+            <label>Email <span class="req">*</span></label>
+            <input type="email" placeholder="name@example.com" />
+            <p class="err"><!-- ng: errors.email --></p>
+          </div>
+          <div class="field">
+            <label>Course <span class="req">*</span></label>
+            <!-- ng: ng-model="form.course" (text is fine too; select is just nicer) -->
+            <select>
+              <option value="" disabled selected>Select course…</option>
+              <option>B.Tech CSE</option>
+              <option>BBA</option>
+              <option>B.Sc Physics</option>
+              <option>B.Com</option>
+              <option>BA English</option>
+            </select>
+            <p class="err"><!-- ng: errors.course --></p>
+          </div>
+          <div class="field">
+            <label>Year <span class="req">*</span></label>
+            <input type="number" min="1900" max="2026" placeholder="2024" />
+            <span class="hint">1900 – current year</span>
+            <p class="err"><!-- ng: errors.year --></p>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn--ghost">Cancel</button>
+          <!-- ng: ng-click="save()" — POST /students/add or PUT /students/{id} -->
+          <button class="btn btn--primary">Save student</button>
+        </div>
+      </div>
+    </section>
+</body>
+</html>
