@@ -1,5 +1,6 @@
 var mainApp = angular.module("myApp", ['ngRoute']);
-
+// app.js (or a config.js loaded first)
+mainApp.constant("API_BASE", "http://localhost:8080");
 mainApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
     $routeProvider
@@ -20,7 +21,7 @@ mainApp.config(['$routeProvider', '$locationProvider', function ($routeProvider,
         });
 }]);
 
-mainApp.controller("myController", function ($scope, $location) {
+mainApp.controller("myController", function ($scope, $location, StudentService, TeacherService) {
     // Keep active tab + title synced with the URL (covers direct load & refresh)
     $scope.$on('$routeChangeSuccess', function () {
         var path = $location.path();
@@ -63,60 +64,22 @@ mainApp.controller("myController", function ($scope, $location) {
     ];
 
     // Teacher data
-    $scope.teachers = [
-        {
-            id: "#1",
-            name: "Meera Iyer",
-            email: "meera@example.com",
-            subject: "Mathematics",
-            department: "Science",
-            experience: 12,
-            salary: 84000
-        },
-        {
-            id: "#2",
-            name: "Rohan Mehta",
-            email: "rohan@example.com",
-            subject: "History",
-            department: "Humanities",
-            experience: 7,
-            salary: 61500
-        },
-        {
-            id: "#3",
-            name: "Priya Sharma",
-            email: "priya@example.com",
-            subject: "English",
-            department: "Humanities",
-            experience: 9,
-            salary: 72000
-        }
-    ];
+    function loadTeachers() {
+        TeacherService.getAll().then(function (res) {
+            $scope.teachers = res.data;
+        })
+    }
+
+    loadTeachers();
 
     // Student data
-    $scope.students = [
-        {
-            id: "#1",
-            name: "Aarav Sharma",
-            email: "aarav@example.com",
-            course: "B.Tech CSE",
-            year: 2024
-        },
-        {
-            id: "#2",
-            name: "Zara Khan",
-            email: "zara@example.com",
-            course: "B.Tech ECE",
-            year: 2025
-        },
-        {
-            id: "#3",
-            name: "Vikram Singh",
-            email: "vikram@example.com",
-            course: "B.Tech ME",
-            year: 2023
-        }
-    ];
+    function loadStudents() {
+        StudentService.getAll().then(function (res) {
+            $scope.students = res.data;
+        })
+    }
+
+    loadStudents();
 
     // Form visibility
     $scope.formVisible = false;
@@ -142,7 +105,7 @@ mainApp.controller("myController", function ($scope, $location) {
     // Save teacher
     $scope.saveTeacher = function () {
         $scope.errors = {};
-        
+
         // Validation
         if (!$scope.newTeacher.name || $scope.newTeacher.name.length < 3) {
             $scope.errors.name = "Name must be 3+ characters";
@@ -167,20 +130,17 @@ mainApp.controller("myController", function ($scope, $location) {
         if (Object.keys($scope.errors).length === 0) {
             if ($scope.editingTeacher) {
                 // Update existing row in place (match by id)
-                for (var i = 0; i < $scope.teachers.length; i++) {
-                    if ($scope.teachers[i].id === $scope.newTeacher.id) {
-                        $scope.teachers[i] = angular.copy($scope.newTeacher);
-                        break;
-                    }
-                }
-                $scope.cancelForm();
-                alert("Teacher updated successfully!");
+                TeacherService.update($scope.newTeacher.id, $scope.newTeacher).then(function () {
+                    $scope.cancelForm();
+                    loadTeachers();
+                    alert("Teacher updated successfully!");
+                });
             } else {
-                var newId = Math.max.apply(null, $scope.teachers.map(function(t) { return parseInt(t.id.replace("#", "")); })) + 1;
-                $scope.newTeacher.id = "#" + newId;
-                $scope.teachers.push(angular.copy($scope.newTeacher));
-                $scope.cancelForm();
-                alert("Teacher added successfully!");
+                TeacherService.add($scope.newTeacher).then(function(){
+                    $scope.cancelForm();
+                    loadTeachers();
+                    alert("Teacher added successfully!");
+                });
             }
         }
     };
@@ -196,7 +156,10 @@ mainApp.controller("myController", function ($scope, $location) {
     // Delete teacher
     $scope.deleteTeacher = function (teacherId) {
         if (confirm("Delete this teacher?")) {
-            $scope.teachers = $scope.teachers.filter(function(t) { return t.id !== teacherId; });
+            TeacherService.remove(teacherId).then(function () {
+                loadTeachers();
+                alert("Teacher deleted successfully!");
+            })
         }
     };
 
@@ -223,7 +186,7 @@ mainApp.controller("myController", function ($scope, $location) {
     // Save student
     $scope.saveStudent = function () {
         $scope.errors = {};
-        
+
         // Validation
         if (!$scope.newStudent.name || $scope.newStudent.name.length < 3) {
             $scope.errors.name = "Name must be 3+ characters";
@@ -242,13 +205,18 @@ mainApp.controller("myController", function ($scope, $location) {
         if (Object.keys($scope.errors).length === 0) {
             if ($scope.editingStudent) {
                 // Update existing student
-                alert("Student updated successfully!");
+                StudentService.update($scope.newStudent.id, $scope.newStudent).then(function () {
+                    $scope.cancelStudentForm();
+                    loadStudents();
+                    alert("Student updated successfully!");
+                })
             } else {
                 // Add new student
-                var newId = Math.max.apply(null, $scope.students.map(function(s) { return parseInt(s.id.replace("#", "")); })) + 1;
-                $scope.newStudent.id = "#" + newId;
-                $scope.students.push(angular.copy($scope.newStudent));
-                alert("Student added successfully!");
+                StudentService.add($scope.newStudent).then(function () {
+                    $scope.cancelStudentForm();
+                    loadStudents();
+                    alert("Student added successfully!");
+                });
             }
             $scope.cancelStudentForm();
         }
@@ -264,7 +232,10 @@ mainApp.controller("myController", function ($scope, $location) {
     // Delete student
     $scope.deleteStudent = function (studentId) {
         if (confirm("Delete this student?")) {
-            $scope.students = $scope.students.filter(function(s) { return s.id !== studentId; });
+            StudentService.remove(studentId).then(function () {
+                loadStudents();
+                alert("Student deleted successfully!");
+            });
         }
     };
 

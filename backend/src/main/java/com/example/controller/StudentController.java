@@ -22,34 +22,34 @@ public class StudentController {
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
-
+    // get all student
     @GetMapping
     public List<Student> getAllStudent() {
         return studentService.getAllStudents();
     }
-
+    // get one student by id
     @GetMapping("/{id}")
     public Student getOne(@PathVariable int id) {
         return studentService.getStudentById(id);
     }
-
+    // add new student
     @PostMapping("/add")
     public ResponseEntity<Student> create(@Valid @RequestBody Student student) {
         Student saved = studentService.addStudent(student);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
-
+    // update student by id
     @PutMapping("/{id}")
     public Student update(@PathVariable int id, @Valid @RequestBody Student student) {
         return studentService.updateStudent(id, student);
     }
-
+    // delete student by id
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         studentService.deleteStudent(id);
         return ResponseEntity.noContent().build();   // 204
     }
-
+    // search student by name
     @GetMapping("/search")
     public List<Student> search(@RequestParam String name) {
         return studentService.searchByName(name);    // empty list is OK, no throw
