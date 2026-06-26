@@ -1,0 +1,9 @@
+<main>
+  <section class="panel" id="students">
+    <!-- Table shows when form hidden -->
+    <div ng-if="!formVisible" ng-include="'views/student/table.html'"></div>
+
+    <!-- Form shows when form visible -->
+    <div ng-if="formVisible" ng-include="'views/student/form.html'"></div>
+  </section>
+</main>

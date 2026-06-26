@@ -1,85 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>School Registry</title>
+<title ng-bind="pageTitle">School Registry</title>
 <link href="app/content/css/styles.css" rel="stylesheet" type="text/css" />
     <script src="app/lib/angular.main.js"></script>
     <script src="app/lib/angular-route.min.js"></script>
     <script src="app/app.js"></script>
 </head>
-<body>
-
-  <header class="topbar">
-    <div class="topbar__inner">
-      <span class="brand">School Registry<span class="dot">.</span></span>
-      <nav class="nav">
-        <a href="index.html#students">Students</a>
-        <a href="index.html#teachers">Teachers</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- ===== HERO ===== -->
-  <section class="hero">
-    <div class="hero__inner">
-      <p class="eyebrow">Student &amp; faculty records</p>
-      <h1>Every student and teacher, on a single <em>ledger</em>.</h1>
-      <p>
-        One place to record, search, and keep enrolment and faculty details
-        accurate — backed by the school's own database, validated on every entry.
-      </p>
-      <div class="hero__cta">
-        <a class="btn btn--primary" href="index.html#students">Open the registry</a>
-        <a class="btn btn--ghost" href="#capabilities">What it does</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== ENTRY CARDS ===== -->
-  <section class="entry">
-    <a class="entry-card" href="index.html#students">
-      <p class="path">/students</p>
-      <h3>Students</h3>
-      <p>Enrolment records — name, email, course, and year. Add, edit, search, or remove entries.</p>
-      <span class="go">Manage students <span class="arrow">→</span></span>
-    </a>
-    <a class="entry-card" href="index.html#teachers">
-      <p class="path">/teachers</p>
-      <h3>Teachers</h3>
-      <p>Faculty records — subject, department, experience, and salary, kept current and consistent.</p>
-      <span class="go">Manage teachers <span class="arrow">→</span></span>
-    </a>
-  </section>
-
-  <!-- ===== CAPABILITIES ===== -->
-  <section class="features" id="capabilities">
-    <div class="features__inner">
-      <div class="feat">
-        <span class="k">find</span>
-        <h4>Search by name</h4>
-        <p>Filter students or teachers instantly as you type, straight from the database.</p>
-      </div>
-      <div class="feat">
-        <span class="k">edit</span>
-        <h4>Add &amp; update</h4>
-        <p>Create new records or revise existing ones with a clean, focused form.</p>
-      </div>
-      <div class="feat">
-        <span class="k">check</span>
-        <h4>Validated entries</h4>
-        <p>Every field is checked on save, so emails, year ranges, and salaries stay sane.</p>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="footer__inner">
-      <span>School Registry — admin console</span>
-      <span>Built on Spring MVC</span>
-    </div>
-  </footer>
-
+<body ng-controller="myController">
+  <header ng-include="'components/nav.html'" class="topbar"></header>
+  <div ng-view></div>
 </body>
+<footer ng-include="'components/footer.html'"></footer>
 </html>

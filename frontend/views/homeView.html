@@ -1,0 +1,20 @@
+<section class="hero" ng-include="'components/hero.html'"></section>
+
+<section class="entry">
+  <a class="entry-card" href="#{{entry.path}}" ng-repeat="entry in entries">
+    <p class="path">{{entry.path}}</p>
+    <h3>{{entry.title}}</h3>
+    <p>{{entry.description}}</p>
+    <span class="go"><span class="arrow">-></span></span>
+  </a>
+</section>
+
+<section class="features" id="capabilities">
+  <div class="features__inner">
+    <div class="feat" ng-repeat="feature in features">
+      <span class="k">{{feature.icon}}</span>
+      <h4>{{feature.title}}</h4>
+      <p>{{feature.description}}</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,54 @@
+<div class="panel__head">
+  <div>
+    <p class="eyebrow">GET /teachers</p>
+    <h2 class="panel__title">Teachers</h2>
+  </div>
+  <div class="toolbar">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="7" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+      </svg>
+      <input type="text" placeholder="Search by name…" aria-label="Search teachers" ng-model="searchQuery" />
+    </div>
+    <button class="btn btn--primary" ng-click="showForm()">+ Add teacher</button>
+  </div>
+</div>
+
+<div class="card">
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:64px">ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Subject</th>
+          <th>Department</th>
+          <th class="num">Exp.</th>
+          <th class="num">Salary</th>
+          <th></th>
+        </tr>
+      </thead>
+      <!-- ng: ng-repeat="t in teachers" -->
+      <tbody>
+        <tr ng-repeat="t in teachers | filter:searchQuery">
+          <td class="id">{{t.id}}</td>
+          <td class="name">{{t.name}}</td>
+          <td class="email">{{t.email}}</td>
+          <td>{{t.subject}}</td>
+          <td><span class="pill">{{t.department}}</span></td>
+          <td class="num">{{t.experience}}</td>
+          <td class="num">₹{{t.salary | number:0}}</td>
+          <td class="row-actions">
+            <button class="btn--link" ng-click="editTeacher(t)">Edit</button>
+            <button class="btn--link danger" ng-click="deleteTeacher(t.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="empty" ng-if="teachers.length === 0">
+    <strong>No teachers yet</strong>Add one to get started.</div>
+  </div>
+</div>

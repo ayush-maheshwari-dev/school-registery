@@ -1,0 +1,52 @@
+ <div class="panel__head">
+        <div>
+          <p class="eyebrow">GET /students</p>
+          <h2 class="panel__title">Students</h2>
+        </div>
+        <div class="toolbar">
+          <div class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Search by name…" aria-label="Search students" ng-model="searchQuery" />
+          </div>
+          <button class="btn btn--primary" ng-click="showStudentForm()">+ Add student</button>
+        </div>
+      </div>
+
+      <!-- ng: show this only when a request fails with {error:"..."} -->
+      <!--
+      <div class="banner">⚠ <span>Something went wrong.</span></div>
+      -->
+
+      <div class="card">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:64px">ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Course</th>
+                <th class="num">Year</th>
+                <th></th>
+              </tr>
+            </thead>
+            <!-- ng: replace these sample rows with ng-repeat="s in students" -->
+            <tbody>
+              <tr ng-repeat="s in students | filter:searchQuery">
+                <td class="id">{{s.id}}</td>
+                <td class="name">{{s.name}}</td>
+                <td class="email">{{s.email}}</td>
+                <td><span class="pill">{{s.course}}</span></td>
+                <td class="num">{{s.year}}</td>
+                <td class="row-actions">
+                  <button class="btn--link" ng-click="editStudent(s)">Edit</button>
+                  <button class="btn--link danger" ng-click="deleteStudent(s.id)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="empty" ng-if="students.length === 0">
+          <strong>No students yet</strong>Add one to get started.</div>
+        </div>
+      </div>

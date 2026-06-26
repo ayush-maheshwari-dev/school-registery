@@ -1,0 +1,48 @@
+<div class="form-card">
+  <h3 class="form-card__title">{{ editingTeacher ? 'Edit Teacher' : 'Add Teacher' }}</h3>
+  <div class="grid">
+    <div class="field">
+      <label>Name <span class="req">*</span></label>
+      <input type="text" placeholder="Full name" ng-model="newTeacher.name" />
+      <span class="hint">3–16 characters</span>
+      <p class="err">{{errors.name}}</p>
+    </div>
+    <div class="field">
+      <label>Email <span class="req">*</span></label>
+      <input type="email" placeholder="name@example.com" ng-model="newTeacher.email" />
+      <p class="err">{{errors.email}}</p>
+    </div>
+    <div class="field">
+      <label>Subject <span class="req">*</span></label>
+      <input type="text" placeholder="e.g. Mathematics" ng-model="newTeacher.subject" />
+      <p class="err">{{errors.subject}}</p>
+    </div>
+    <div class="field">
+      <label>Department <span class="req">*</span></label>
+      <select ng-model="newTeacher.department">
+        <option value="" disabled>Select department</option>
+        <option value="Science">Science</option>
+        <option value="Humanities">Humanities</option>
+        <option value="Commerce">Commerce</option>
+        <option value="Languages">Languages</option>
+      </select>
+      <p class="err">{{errors.department}}</p>
+    </div>
+    <div class="field">
+      <label>Experience (years) <span class="req">*</span></label>
+      <input type="number" min="0" max="50" placeholder="0" ng-model="newTeacher.experience" />
+      <span class="hint">0 – 50</span>
+      <p class="err">{{errors.experience}}</p>
+    </div>
+    <div class="field">
+      <label>Salary <span class="req">*</span></label>
+      <input type="number" min="30000" max="200000" step="500" placeholder="30000" ng-model="newTeacher.salary" />
+      <span class="hint">30,000 – 200,000</span>
+      <p class="err">{{errors.salary}}</p>
+    </div>
+  </div>
+  <div class="form-actions">
+    <button class="btn btn--ghost" ng-click="cancelForm()">Cancel</button>
+    <button class="btn btn--primary" ng-click="saveTeacher()">{{ editingTeacher ? 'Update' : 'Save' }}</button>
+  </div>
+</div>
